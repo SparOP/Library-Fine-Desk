@@ -5,6 +5,7 @@ public class Main {
 
     static Scanner sc = new Scanner(System.in);
 
+    // Main Function - Menu Driven
     public static void main(String[] args) {
 
         while (true) {
@@ -19,17 +20,28 @@ public class Main {
             int ch = sc.nextInt();
 
             switch (ch) {
-                case 1: addBook(); break;
-                case 2: issueBook(); break;
-                case 3: returnBook(); break;
-                case 4: overdueList(); break;
-                case 5: System.exit(0);
-                default: System.out.println("Invalid choice!");
+                case 1:
+                    addBook();
+                    break;
+                case 2:
+                    issueBook();
+                    break;
+                case 3:
+                    returnBook();
+                    break;
+                case 4:
+                    overdueList();
+                    break;
+                case 5:
+                    System.exit(0);
+                default:
+                    System.out.println("Invalid choice!");
             }
         }
     }
 
-    // ✅ Add Book
+    // Book Add Function
+
     static void addBook() {
         try (Connection conn = DBConnection.getConnection()) {
 
@@ -57,7 +69,8 @@ public class Main {
         }
     }
 
-    // ✅ Issue Book
+    // Book Issue Function
+
     static void issueBook() {
         try (Connection conn = DBConnection.getConnection()) {
 
@@ -97,7 +110,8 @@ public class Main {
         }
     }
 
-    // ✅ Return Book
+    // Return Book Function
+
     static void returnBook() {
         try (Connection conn = DBConnection.getConnection()) {
 
@@ -143,18 +157,23 @@ public class Main {
         }
     }
 
-    // ✅ Overdue List
+    // Overdue Function
+
     static void overdueList() {
         try (Connection conn = DBConnection.getConnection()) {
 
-            String query = "SELECT * FROM issues WHERE returned_on IS NULL AND due_date < CURDATE()";
+            String query = "SELECT issue_id, student, due_date, " +
+                    "GREATEST(DATEDIFF(CURDATE(), due_date),0)*2 AS fine " +
+                    "FROM issues WHERE returned_on IS NULL AND due_date < CURDATE()";
+
             PreparedStatement ps = conn.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
                 System.out.println("Issue ID: " + rs.getInt("issue_id") +
                         " | Student: " + rs.getString("student") +
-                        " | Due Date: " + rs.getDate("due_date"));
+                        " | Due Date: " + rs.getDate("due_date") +
+                        " | Fine: Rs " + rs.getDouble("fine"));
             }
 
         } catch (Exception e) {
