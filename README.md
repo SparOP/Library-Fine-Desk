@@ -1,46 +1,48 @@
-📚 Library Book Issue & Fine System
+**Library Book Issue & Fine System**
 
 A console-based Java application using JDBC and MySQL to manage library operations and automate fine calculation.
 
-🚀 Features
+Features
 
-* Add books to library
-* Issue books with availability check
-* Automatic due date (14 days from issue)
-* Return books with fine calculation (₹2 per day overdue)
-* View overdue books with fine amount
+- Add books to library
+- Issue books with availability check
+- Automatic due date (14 days from issue)
+- Return books with fine calculation (₹2 per day overdue)
+- View overdue books with fine amount
 
-🛠️ Tech Stack
+**Tech Stack**
 
-* Core Java (Console Application)
-* MySQL Database (MySQL 8.0.44)
-* JDBC (MySQL Connector J)
+- Core Java (Console Application)
+- MySQL Database (MySQL 8.0.44)
+- JDBC (MySQL Connector J)
 
-▶️ Setup Instructions
+**Setup Instructions:**
 
 1. Create database:
 
    CREATE DATABASE library_fine;
    USE library_fine;
-   
+
 2. Run `schema.sql`
-3. Place MySQL connector `.jar` in `src/`
+3. Place MySQL connector `.jar` in `src/` (check Notes)
 4. Compile and run:
 
-   javac -cp ".;mysql-connector-j-9.6.0.jar" *.java
+   javac -cp ".;mysql-connector-j-9.6.0.jar" \*.java
    java -cp ".;mysql-connector-j-9.6.0.jar" Main
 
-🔐 Note
+**Notes:**
 
-* Database credentials are not included for security. Set password accordingly as per the users' own passwords.
-* Overdue Simulation Query (run after issuing second book):
+- To get .jar file -> https://dev.mysql.com/downloads/connector/j/ -> Select Platform Independent -> Donwload and extract Platform Independent (Architecture Independent), ZIP Archive 9.6.0
+  (mysql-connector-j-9.6.0.zip) -> Extract it -> get the .jar file and put in /src
+- Database credentials are not included for security. Set password accordingly as per the users' own passwords replacing "enter your password" in src/DBconnection.java.
+- Overdue Simulation Query (run after issuing second book):
 
-   UPDATE issues
-   SET due_date = CURDATE() - INTERVAL 5 DAY
-   WHERE issue_id = 2;
+  UPDATE issues
+  SET due_date = CURDATE() - INTERVAL 5 DAY
+  WHERE issue_id = 2;
 
-📂 Project Structure
+**Project Structure:**
 
-* `src/` → Java source files
-* `sql/` → database schema
-* `screenshots/` → output proof
+- `src/` → Java source files
+- `sql/` → database schema
+- `screenshots/` → output proof
